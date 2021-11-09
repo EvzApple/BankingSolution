@@ -16,7 +16,7 @@
             _balance -= amountToWithdraw;
         }
 
-        public void Deposit(decimal amountToDeposit)
+        public virtual void Deposit(decimal amountToDeposit) //add virtual to make change to method in child class
         {
             _balance += amountToDeposit;
         }
