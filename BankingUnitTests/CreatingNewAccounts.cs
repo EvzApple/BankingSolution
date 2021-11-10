@@ -1,4 +1,5 @@
 ﻿using BankingDomain;
+using BankingUnitTests.TestDoubles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace BankingUnitTests
         {
             //WTCYWYH - "write the code you wish you had" --> Corey Haines
             //System Under Test (SUT) - BankAccount
-            BankAccount account = new BankAccount();
+            BankAccount account = new BankAccount(new DummyBonusCalculator());
 
             decimal openingBalance = account.GetBalance();
 

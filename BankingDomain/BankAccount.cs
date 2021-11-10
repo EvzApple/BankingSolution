@@ -3,6 +3,12 @@
     public class BankAccount
     {
         private decimal _balance = 5000M;
+        private ICalculateBonuses _bonusCalculator;
+
+        public BankAccount(ICalculateBonuses bonusCalculator)
+        {
+            _bonusCalculator = bonusCalculator;
+        }
 
         public decimal GetBalance()
         {
@@ -13,12 +19,22 @@
 
         public void Withdraw(decimal amountToWithdraw)
         {
-            _balance -= amountToWithdraw;
+            if (amountToWithdraw > _balance)
+            {
+                throw new CannotOverdraftException();
+            }
+            else
+            {
+                _balance -= amountToWithdraw;
+            }
         }
 
         public void Deposit(decimal amountToDeposit)
         {
-            _balance += amountToDeposit;
+            //var bonusCalculator = new StandardBonusCalculator();
+            decimal bonus = _bonusCalculator.GetBonusForDeposit(_balance, amountToDeposit);
+
+            _balance += amountToDeposit + bonus;
         }
     }
 }
