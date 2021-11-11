@@ -3,11 +3,14 @@
     public class BankAccount
     {
         private decimal _balance = 5000M;
-        private ICalculateBonuses _bonusCalculator;
+        private readonly ICalculateBonuses _bonusCalculator;
+        private readonly INotifyTheFed _fedNotifier;
 
-        public BankAccount(ICalculateBonuses bonusCalculator)
+        public BankAccount(ICalculateBonuses bonusCalculator, INotifyTheFed fedNotifier)
         {
             _bonusCalculator = bonusCalculator;
+            _fedNotifier = fedNotifier; 
+
         }
 
         public decimal GetBalance()
@@ -25,7 +28,10 @@
             }
             else
             {
+                //Write the code you wish you had
+                _fedNotifier.NotifyOfWithdraw(this, amountToWithdraw); //"this" on this particular created instance
                 _balance -= amountToWithdraw;
+
             }
         }
 
